@@ -31,7 +31,7 @@ Este guia documenta os passos para configurar um ambiente TensorFlow com suporte
 
 2. **Executar o container com suporte a GPU:**
    ```bash
-   docker run --rm --gpus all --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 -it nvcr.io/nvidia/tensorflow:23.09-tf2-py3 bash
+   docker run --rm --gpus all --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 -v $(pwd):/workspace -it nvcr.io/nvidia/tensorflow:23.09-tf2-py3 bash
    ```
 
 3. **Testar se o TensorFlow detecta a GPU:**
@@ -42,18 +42,6 @@ Este guia documenta os passos para configurar um ambiente TensorFlow com suporte
    A saída esperada será algo como:
    ```
    [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
-   ```
-
-4. **Opcional: Mapear um diretório do host para o container:**
-   Para persistir arquivos entre o host e o container:
-   ```bash
-   docker run --rm --gpus all --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 -v $(pwd):/workspace -it nvcr.io/nvidia/tensorflow:23.09-tf2-py3 bash
-   ```
-
-5. **Instalar pacotes adicionais no container (se necessário):**
-   Por exemplo:
-   ```bash
-   pip install numpy pandas matplotlib
    ```
 
 ---
@@ -67,25 +55,6 @@ Este guia documenta os passos para configurar um ambiente TensorFlow com suporte
   - **TensorFlow**: Versão 2.13.0
   - **CUDA**: Versão 12.4
   - **GPU**: NVIDIA GTX 1050 Ti
-
----
-
-## Comandos Úteis
-
-- **Listar GPUs disponíveis no host:**
-  ```bash
-  nvidia-smi
-  ```
-
-- **Verificar se o Docker reconhece GPUs:**
-  ```bash
-  docker run --rm --gpus all nvidia/cuda:12.2.0-runtime-ubuntu22.04 nvidia-smi
-  ```
-
-- **Persistir configurações do container em uma imagem personalizada:**
-  ```bash
-  docker commit <container_id> my-tf-gpu-env
-  ```
 
 ---
 
